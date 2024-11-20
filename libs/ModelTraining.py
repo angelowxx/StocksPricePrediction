@@ -44,10 +44,10 @@ def train(symbol_list, past_nums, prict_nums, num_epochs = 10):
 
         print(f"Epoch [{epoch + 1}/{num_epochs}], Loss: {loss.item():.4f}")
 
-    valuate_model(model, X_test, Y_test, loss_fn, colums)
+    evaluate_model(model, X_test, Y_test, loss_fn, colums)
     return model
 
-def valuate_model(model, X_test, Y_test, loss_fn, colums):
+def evaluate_model(model, X_test, Y_test, loss_fn, colums):
     Y_pred = model(X_test.flatten(start_dim=1, end_dim=-1))
     Y_pred = Y_pred.view(Y_test.shape[0], Y_test.shape[1], Y_test.shape[2])
     eval_loss = loss_fn(Y_pred, Y_test)
