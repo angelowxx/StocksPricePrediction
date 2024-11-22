@@ -1,4 +1,5 @@
 import numpy
+import torch
 import torch.nn as nn
 import torch.nn.init as init
 
@@ -42,3 +43,12 @@ def custom_reset_parameters(m):
         init.uniform_(m.weight, -0.01, 0.01)
         if m.bias is not None:
             init.uniform_(m.bias, -0.01, 0.01)
+
+def custom_loss(y_pred, y_true, lambda_var=0.5):
+    huber_loss = torch.nn.HuberLoss(delta=0.2)
+    mse_loss = huber_loss(y_pred, y_true)
+    variance = torch.var(y_pred, unbiased=False)  # Variance of predictions
+    variance_true = torch.var(y_true, unbiased=False)
+    variance -= variance_true
+    variance = torch.abs(variance)
+    return mse_loss + lambda_var * variance  # encourage prediction to have the same variance as y_true

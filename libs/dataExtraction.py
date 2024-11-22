@@ -16,4 +16,4 @@ class StockDataExtraction():
         return daily_stock
 
     def saveStockIndosAsCsvUpToDate(self, data, stockSymbol):
-        data.to_csv(f"{stockSymbol}.csv", index=False)  # Save to CSV without index
+        data.to_csv(f"./data/{stockSymbol}.csv", index=False)  # Save to CSV without index

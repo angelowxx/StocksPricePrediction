@@ -21,7 +21,7 @@ class DataPreparation:
         # the weights are set manually, onece the colums got changed, this should be changed, either
         #weights = np.array([0.5, 2.0, 0.5, 2.0, 2.0])
         stds = np.nanstd(data, axis=0)
-        #stds = stds*weights
+        stds = stds*0.5
         means = np.nanmean(data, axis=0)
 
         data = (data -means)/stds
