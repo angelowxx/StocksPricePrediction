@@ -14,7 +14,10 @@ class MultiLayersModel(nn.Module):
             out_size = sizes[i+1]
             fc_cur = nn.Linear(in_size, out_size)
             activation_cur = nn.ReLU()
-            dropout = nn.Dropout(p=0.5)
+            if i == 0:
+                dropout = nn.Dropout(p=0.2)
+            else:
+                dropout = nn.Dropout(p=0.5)
             self.fc.append(fc_cur)
             self.fc.append(activation_cur)
             self.fc.append(dropout)
@@ -44,11 +47,11 @@ def custom_reset_parameters(m):
         if m.bias is not None:
             init.uniform_(m.bias, -0.01, 0.01)
 
-def custom_loss(y_pred, y_true, lambda_var=0.5):
+def custom_loss(y_pred, y_true, lambda_var=0.2):
     huber_loss = torch.nn.HuberLoss(delta=0.2)
     mse_loss = huber_loss(y_pred, y_true)
     variance = torch.var(y_pred, unbiased=False)  # Variance of predictions
     variance_true = torch.var(y_true, unbiased=False)
     variance -= variance_true
     variance = torch.abs(variance)
-    return mse_loss + lambda_var * variance  # encourage prediction to have the same variance as y_true
+    return (1-lambda_var)*mse_loss + lambda_var * variance  # encourage prediction to have the same variance as y_true

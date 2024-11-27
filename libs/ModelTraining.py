@@ -156,11 +156,11 @@ def trainModel(symbol_list, past_nums, prict_nums, Draw = False):
 
     model_save_path = "final_model.pth"
     params = None
-    num_epochs = [100]
+    num_epochs = [50]
     lrs = [0.0005]
-    batch_sizes = [8]
+    batch_sizes = [4]
     half_layers = [2]
-    units_ratios = [2]
+    units_ratios = [4]
     combinations = list(itertools.product(num_epochs, lrs, batch_sizes, half_layers, units_ratios))
     for num_epochs, lr, batch_size, half_inner_layers, units_ratio in combinations:
 
@@ -198,7 +198,7 @@ def trainModel(symbol_list, past_nums, prict_nums, Draw = False):
 # Initialize model
 if __name__ == '__main__':
     symbol_list = ["sh000001", "sh603259"]
-    past_nums = 30
-    prict_nums = 5
+    past_nums = 80
+    prict_nums = 30
 
     trainModel(symbol_list, past_nums, prict_nums, Draw=True)
