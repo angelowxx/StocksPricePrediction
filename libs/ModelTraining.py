@@ -199,6 +199,6 @@ def trainModel(symbol_list, past_nums, prict_nums, Draw = False):
 if __name__ == '__main__':
     symbol_list = ["sh000001", "sh603259"]
     past_nums = 80
-    prict_nums = 30
+    prict_nums = 10
 
     trainModel(symbol_list, past_nums, prict_nums, Draw=True)
